@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://mat1.gtimg.com/news/v_rranduan/react/react.js"></script>
+    <script src="http://mat1.gtimg.com/news/v_rranduan/react/react-dom.js"></script>
+    <script src="http://mat1.gtimg.com/news/v_rranduan/react/browser.min.js"></script>
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+         const reducer = (state = 0, action) => {
+            switch (action.type) {
+                case 'ADD': 
+                    return state + 1;
+                case 'SUB': 
+                    return state - 1;
+                default: return state;
+            }
+        };
+        const store = Redux.createStore(reducer);
+        class Counter extends React.Component{
+            render() {
+                return (
+                    <div>
+                        <h1>{this.props.value}</h1>
+                        <button onClick={this.props.onAdd}>+</button>
+                        <button onClick={this.props.onSub}>-</button>
+                    </div>
+                )
+            }
+        }
+        const render = () => {
+            ReactDOM.render(
+                <Counter
+                    value={store.getState()}
+                    onAdd={() => store.dispatch({
+                        type: 'ADD'
+                    })}
+                    onSub={() => store.dispatch({
+                        type: 'SUB'
+                    })}
+                />,
+                document.getElementById('root')
+            );
+        };
+        render();
+        store.subscribe(render);
+    </script>
+    
+</body>
+</html>
