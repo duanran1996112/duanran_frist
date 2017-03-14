@@ -36,15 +36,7 @@
         }
         const render = () => {
             ReactDOM.render(
-                <Counter
-                    value={store.getState()}
-                    onAdd={() => store.dispatch({
-                        type: 'ADD'
-                    })}
-                    onSub={() => store.dispatch({
-                        type: 'SUB'
-                    })}
-                />,
+                <Counter value={store.getState()} onAdd={() => store.dispatch({type: 'ADD'})} onSub={() => store.dispatch({type: 'SUB'})}/>,
                 document.getElementById('root')
             );
         };
