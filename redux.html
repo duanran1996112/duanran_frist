@@ -13,36 +13,17 @@
 <body>
     <div id="root"></div>
     <script type="text/babel">
-         const reducer = (state = 0, action) => {
-            switch (action.type) {
-                case 'ADD': 
-                    return state + 1;
-                case 'SUB': 
-                    return state - 1;
-                default: return state;
-            }
-        };
-        const store = Redux.createStore(reducer);
         class Counter extends React.Component{
             render() {
                 return (
-                    <div>
-                        <h1>{this.props.value}</h1>
-                        <button onClick={this.props.onAdd}>+</button>
-                        <button onClick={this.props.onSub}>-</button>
-                    </div>
-                )
+                    <h1>121</h1>
+                )           
             }
         }
-        const render = () => {
-            ReactDOM.render(
-                <Counter value={store.getState()} onAdd={() => store.dispatch({type: 'ADD'})} onSub={() => store.dispatch({type: 'SUB'})}/>,
-                document.getElementById('root')
-            );
-        };
-        render();
-        store.subscribe(render);
-    </script>
-    
+        ReactDOM.render(
+            <Counter/>,
+            document.getElementById('root')
+        );
+    </script>   
 </body>
 </html>
