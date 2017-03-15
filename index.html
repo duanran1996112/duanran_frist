@@ -71,11 +71,18 @@
                   sessionStorage: 存储量在5M以上，浏览器关闭失效
                   cookie: 存储量不大于4k，过期失效
 
+                  localStorage/sessionStorage
                   操作方法:
                            1.setItem(name,val) 设置属性值
                            2.getItem(name) 获得属性值
                            3.removeItem(name) 移出属性值
                            4.clear() 清除所有属性
+                  
+                  cookie
+                  操作方法:
+                           document.cookie = name+"="+value+时间戳 // 存储cookie
+                           document.cookie // 查看cookie 用split拆分，返回name对应的value
+                           document.cookie = name+"="+""+'-1' // 删除cookie，value值为空，时间戳为-
     </div>
 
     <div class="css">
