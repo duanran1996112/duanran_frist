@@ -7,6 +7,133 @@
     <title>Document</title>
 </head>
 <body>
+    <div class="html">
+        行级元素 inline: span a em strong br
+        块级元素 block: div h1~6 p ul li ol　
+
+        h5新标签: 
+                 非主体: header footer hgroup address
+                 主体: article section nav aside
+                 非结构性标签: audio video canvas svg
+
+        audio video:
+        　　　　　　　自动播放: autoplay 
+                     播放: play
+                     暂停: pause
+                     已经播放时间: currentTine
+                     视频的总时长: duration
+                     进度条: controls
+                     音量: volume
+                     播放速度: playbackRate
+
+        canvas: 
+                使用canvas
+                var canvas =document.getElementById('myCanvas');
+                var ctx = canvas.getContext('2d');
+
+                绘制线段: ctx.moveTo(xxx, xxx)　ctx.lineTo(xxx, xxx)
+                绘制矩形: ctx.rect(x,y,dx,dy) ctx.fillRect() ctx.strokRect()
+                绘制圆形: ctx.arcTo(x1, y1, x2, y2, r)
+
+                高斯模糊: ctx.drawImage(img, 0, 0, w, h, 0, 0, canvasW, canvasH) // 将图片放到canvas
+                         var pixel = ctx.getImageData(0, 0, canvasH, canvasH) // 获取图片像素信息，受到同源策略的限制
+                         gaussBlur(pixel); // 高斯模糊
+                         ctx.putImageData(pixel, 0, 0); // 将像素信息放回canvas
+                         var imageData = canvas.toDataURL(); // 将canvas的内容抽取成一张图片
+                         dom.css('background-image', 'url(' + imageData + ')'); // 变成图片的src
+
+        svg: 
+             使用svg
+             <svg width=“500px” height=“500px”></svg>
+
+             绘制直线: <line x1="xxx" y1="xxx" x2="xxx" y2="xxx"></line>
+             绘制矩形: <rect x="xxx" y="xxx" width="xxx" height="xxx" rx="xxx" ry="xxx"″></rect>
+             绘制圆形: <circle r="xxx" cx="xxx" cy="xxx"></circle>
+
+             路径: 
+                   <path d = "M xxx xxx L xxx xxx" /> 从(xxx,xxx)到(xxx,xxx)
+                   <path d="Mxxx xxx H xxx V xxx"/> // H横向移动 V纵向移动
+                   A 命令绘制圆弧
+                   Z 命令回到起点
+
+        html5获取当前地理位置: window.navigator.geolocation
+
+        html5拖拽: 
+                  draggble="true"
+                  dragstart 被拖拽元素 开始时触发
+                  dragend 被拖拽元素 结束时触发
+                  dragenter 目标元素 拖拽元素进入目标元素
+                  dragover 目标元素 拖拽元素在目标元素上移动
+                  drop 目标元素 被拖拽的元素在目标元素上同时鼠标放开触发的事件
+
+        客户端存储: 
+                  localStorage: 存储量在5M以上，浏览器关闭不会失效
+                  sessionStorage: 存储量在5M以上，浏览器关闭失效
+                  cookie: 存储量不大于4k，过期失效
+
+                  操作方法:
+                           1.setItem(name,val) 设置属性值
+                           2.getItem(name) 获得属性值
+                           3.removeItem(name) 移出属性值
+                           4.clear() 清除所有属性
+    </div>
+
+    <div class="css">
+        CSS选择器	       权重值
+        !important		 无穷大
+        行间样式		  1000
+        id				  100
+        class、属性、伪类	 10
+        标签、伪元素		 1
+        通配符			   0
+
+        css3选择器:
+                   css3属性选择器 ele[attr="*(任意位置),^(开头),$(结尾)"]
+                   css3伪类选择器 
+                                 :first-of-type
+                                 :last-of-type
+                                 :nth-of-type(n) 一组中的第几个
+                                 :nth-last-of-type(n)
+                   css3条件选择器
+                                 E+F  F是E的兄弟节点，而且是E后面的第一个
+                                 E~F  F是E后面的兄弟节点
+                        
+        三维动画:
+                 首先，设置transform-style: preverse-3d
+                 其次，给父级设置景深: transform: prespective(xxx)
+                 然后，使用tranform: translateZ(xxx)，形成三维效果
+
+        动画加速: 
+                 1.GPU硬件加速模式，让浏览器在渲染动画的时候从CPU转向GPU
+                 transform: transtion3d(0,0,0)
+                 transform: translateZ(0)
+                 2.防止动画出现闪烁
+                 backface-visibilty: hidden
+                 prespective: xxx
+
+        多列布局: 
+                 父级wrapper设置 columns: xxx // 分成几分就写几 
+                 column-gap: xxx //  布局两列中间宽度
+                 column-rule: 20px solid green // 布局两列中间加一横线
+        
+        盒子模型:
+                 box-sizing: border-box // IE6混杂模式的盒模型 border+padding+content
+                 box-sizing: content-box // 标准模式的盒模型 content
+                 
+        弹性盒子: 
+                 父级元素: display: flex
+                 子级元素: 
+                          flex-grow // 比例分配剩余空间
+                          flex-shrink // 按比例收缩超出空间
+                          flex-basis // 设置伸缩基准值 相当于width: basis/(basis的总和) * 容器的宽度
+
+                          flex-wrap: no-wrap // 超出部分不换行,会压缩子元素
+
+                  弹性盒子水平垂直居中:
+                          justify-content:center
+                          align-items:center
+    </div>
+
     <div class="兼容性">
         兼容性:
 
