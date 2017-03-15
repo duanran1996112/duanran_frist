@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="兼容性">
+        兼容性:
+
+        opacity兼容性 {
+            opacity: 1 // chrome
+            filter: alpha(opacity = 100) //ie6~8
+            -moz-opacity: 1 // firefox
+        }
+
+        浮动模型兼容性 {
+            :after {
+                display: block;
+                content: "";
+                clear: both;
+            } // chrome
+
+            {
+                overflew: hidden;
+                _zoom: 1;
+            } // ie6~8
+        }
+
+        css3属性兼容性 {
+            -moz- // firefox         gecko
+            -ms- // ie               trident
+            -webkit- // safari       webkit
+            -o- // opera             presto
+            // chrome               blink/webkit
+        }
+    </div>
+
+    <div class="原型链">
+        原型: 原型是function对象的一个属性，它是构造函数制造出来的对象的公共祖先。
+              通过该构造函数产生的对象，可以继承该原型的属性和方法。原型也是对象。
+
+        func.prototype
+        对象.__proto__
+
+        对象查看自身的构造函数: 对象.constructor
+                              对象 instanceof 构造函数 --> true
+
+        原型链: 原型的对象自然还有自己的原型，这样的原型上还有原型的结构就构成了原型链。
+
+        继承: 1.原型链继承
+              2.构造函数 foo.call()
+              3.共享原型 son.prototype = foo.prototype
+              4.object.create() 
+              5.圣杯模式 
+                  var inherit = (function (){
+                    var F = function(){};
+                    return function (C,P){
+                            F.prototype = P.prototype;
+                            C.prototype = new F();
+                            C.prototype.constructor = C;
+                            C.prototype.uber = P;
+                    }
+                }());
+              6.es6 class xxx extands xxx
+    </div>
+
+    <div class="闭包">
+        作用域: 变量和函数生效的区域。
+
+        作用域链: 函数作用域，函数又可以嵌套，作用域之间就会产生嵌套关系，就产生了作用域链。
+
+        闭包: 闭包就是能够读取其他函数内部变量的函数。(zepto jquery)
+
+        闭包定义: 在一个函数内部再定义一个函数，并且这个内部函数与外部函数的变量有关联，通过返回这个内部的函来访问外部函数里面的变量。
+
+        立即执行函数: 解闭包的一个重要方法，通过另一个新闭包来消除上一个闭包的影响
+        (function () {} ())
+        (function () {})()
+    </div>
+
+    <div class="类型转换">
+        基本数据类型: Number，String，Boolean，undefined(未定义)，null(空) 
+
+        原始值: Number，String，Boolean，undefined，null
+
+        引用值: object(array)，function
+
+        默认为false的值: undefined，null，""，NaN，0，false
+
+        typeof的返回值: number，string，boolean，undefined，object，function
+    </div>
+
+    <div class="克隆">
+        浅层克隆: 源对象里面有什么属性，目标对象就有什么属性。
+                 但是当属性是属性是引用值的时候，改变源对象目标对象也会发生改变。
+        function clone(src, tar) {
+            var tar = tar || {}; 如果没有tar则默认是一个空对象
+            for(var prop in src) {
+                    if(src.hasOwnProperty(prop)){
+                        tar[prop] = src[prop];
+                    }
+            }
+            return tar; 
+        }
+
+        深层克隆: 利用递归调用的方法，当检测到源对象里面的这个属性值是引用类型的。
+                 就在目标对象里面也创建一个引用类型的属性，是数组就创建数组，是对象就创建对象。
+                 将源对象里面的这个引用值和目标对象里面的引用值分别当做新的源对象和目标对象进行克隆。
+        function deepCopy(src,tar){
+            var tar= tar|| {} ;
+            for (var prop in src){
+                    if (typeof (src[prop]) == 'object'){
+                        tar[prop] = (src[prop].constructor === Array ) ? [] : {};
+                        deepCopy(src[prop],tar[prop]);
+                    }else {
+                        tar[prop] = src[prop];
+                    }
+            }
+            return tar;
+        }
+    </div>
+
+    <div class="数组去重">
+        数组: 可以溢出写，不可以溢出读
+        数组上的方法: 
+            改变原数组: reverse, // 倒叙
+                       sort, // 负数的时候，表示a在前面，b在后面。正数的时候，表示a在后面，b在前面。
+                       push,pop, // 后进后出
+                       shift,unshift, // 前出前进
+                       splice // 删除
+            不改变原数组: concat,join
+    
+
+        数组去重: 数组中的这个数据出现过一次之后，就在一个对象中将这个元素的值的位置标记成1。
+                 后面如果出现相同的属性值，因为这个位置已经是1了，所以就不会添加到新数组里面，从而达到了去重的效果。
+        Array.prototype.unique = function () {
+            var len = this.length,
+            arr = [],
+            obj = {};
+            for (var i = 0; i < len; i++) {
+                    if (!obj[this[i]]) {
+                        obj[this[i]] = 1;
+                        arr.push(this[i]);
+                    }
+            }
+            return arr;
+        }  
+
+
+        es5数组新方法: foreach(改变原数组)，
+                      map(不改变原数组)，
+                      filter(不改变原数组)，
+                      some，every，
+                      reduce，reduceRight
+
+        数组的检测: isArray()方法来检测是否是数组。
+                   constructor和instanceof。
+                   Object.prototype.toString.call(arr) === ‘[object Array]’ (不会发生窗体混淆)
+    </div>
+    
+    <div class="DOM">
+        元素节点——1
+        属性节点——2
+        文本节点——3
+        注释节点——8
+        document——9
+        DocumentFragment——11
+
+        document.getElementById  // 在ie8以下的浏览器中，不区分大小写，而且标签的name属性也可以被当做id被选择出来
+        document.getElementsByClassName // ie8及以下的版本中没有这种方法
+        document.getElementsByTagName // 兼容所有浏览器
+        document.getElementsByName // 只有部分标签的name可以生效，表单、表单元素、img、iframe
+        css选择器: querySelector() // ie7及以下的版本中没有这种方法
+                   querySelectorAll() // ie7及以下的版本中没有这种方法
+        
+
+        绑定事件 {
+            ie: attachEvent(,)
+            chrome: addEventListener(,,false) // 是否开启事件捕获
+            其他: 句柄绑定 onclick
+        }
+        解除事件 {
+            ie: detachEvent(,)
+            chrome: addEventListener(,,false)
+            其他: onclick = null
+        }
+        取消冒泡 {
+            ie: event.cancelBubble = true
+            chrome: event.stopPropagation();
+        }
+        取消默认事件 {
+            ie: e.returnValue = false
+            chrome: e.preventDefault()
+            其他: return false;
+        }
+
+        事件处理模型: 先捕获后冒泡(从外向里，从里向外)
+
+        事件处理机制: 1.注册事件
+                     2.初始化事件参数
+                     3.触发事件（事件捕获 事件执行 事件冒泡）
+
+
+        获取css样式 {
+            ie: dom.currentStyle[属性]
+            chrome: window.getComputedStyle(dom,伪元素)[属性]
+        }
+    </div>
+
+    <div class="BOM">
+        navigator.userAgent    前用户使用的是pc端还是移动端，是什么浏览器。
+
+        screen.availHeight/availWidth 可以查看除了window任务栏之外的屏幕的高度和宽度。
+        screen.height/width 返回显示器的屏幕的高度和宽度。   兼容的较少。
+        screen.deviceXDPI/deviceYDPI 返回显示屏幕的分辨率。
+
+        history，location，window
+    </div>
+
+    <div class="网络协议">
+        状态码: 
+                1xx   信息性状态码
+
+                2xx   成功状态码
+                200   请求已经被服务器正常处理
+                204   请求处理成功，但是没有资源可以返回。
+                206   表示客户端进行了范围请求，而服务器成功执行了这部分的GET请求
+
+                3xx   重定向状态码
+                301   永久性重定向
+                302   临时性重定向
+                303   请求的对应资源存在着另一个URI
+                304   资源已找到，但是未符合要求
+                307   临时重定向
+
+                4xx   客户端错误状态码
+                400   请求报文中存在语法错误
+                401   发送的请求需要有通过HTTP认证的认证信息
+                403   不允许访问该资源
+                404   服务器上没有该资源
+
+                5xx   服务器错误状态码
+                500   服务器端在执行请求时发生错误  
+                503   服务器暂时处于超负载或正在停机维护，无法处理请求 
+
+        get和post的区别: 
+                get                                      post
+                主动的或被动的                            主动的
+                文本                                     文本或二进制
+                小于255个字符                             没有限制
+                url的一部分，在浏览器地址中可见            作为请求消息体发送，用户不可见
+                数据在url历史缓存中                       数据不在url历史缓存中
+
+        同源策略: 只有在域名、协议名、端口号都相同。
+                 不同源的客户端脚本在没有明确授权的情况下，是不能够读写对方的资源的。 
+
+        URI: 统一资源标识符
+        URL: 统一资源定位符
+
+        HTTP协议是TCP/IP协议的子集。
+        TCP/IP分层管理的结构是: 应用层、传输层、网络层、数据链路层。
+    </div>
+
+    <div class="ajax">
+        AJAX最重要的两个对象: 
+                             new XMLHttpRequest()
+                             new ActiveXObject(‘Microsoft.XMLHTTP’)
+        
+        AJAX优点:
+                  1.页面无刷新
+                  2.使用异步的形式与服务器进行通信
+                  3.减轻服务器的负担
+                  4.不需要插件或者小程序
+        AJAX缺点:
+                  1.不支持浏览器的后退机制
+                  2.对搜索引擎支持较弱
+                  3.违背了url和资源定位的初衷支持较弱
+        
+        AJAX步骤:
+                  1.创建ajax对象 
+                      XMLHttpRequest();
+                      ActiveXObject('Mircosoft.XMLHTTP');
+
+                  2.创建与服务器的连接和调用
+                      open(method,get,false) // 第三个参数是否异步
+                      send()
+
+                  3.监听对象状态改变
+                      readyState == 4 
+                      status == 200
+                      callBack(responseText);
+
+                  网速非常快，刚刚请求数据，数据就已经返回回来了
+                  但是代码还没有走到监听部分，这就导致了监听部分的失效
+
+                  function AJAX(json) {
+                     var url = json.url,
+                         method = json.method,
+                         flag = json.flag,
+                         data = json.data,
+                         callBack = json.callBack,
+                         xhr = null;
+                     if(window.XMLHttpRequest) {
+                         xhr = new window.XMLHttpRequest();
+                     }else {
+                         xhr = new ActiveXObject('Mircosoft.XMLHTTP');
+                     }			
+                     if(method == 'get') {
+                         url += '?' + data + new Date().getTime(); 
+                         xhr.open('get', url, flag);
+                     }else {
+                         xhr.open('post', url, flag);
+                     }
+                     xhr.onreadystatechange = function () {
+                         if (xhr.readyState === 4 && xhr.status === 200) {
+                             // 数据已经可用了
+                             callBack(xhr.responseText);
+                         }
+                     }
+                     if(method == 'get') {
+                         xhr.send();
+                     }else {
+                         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urle');
+                         // 设置发送数据的格式
+                         xhr.send(data);
+                     }	
+                 }           
+    </div>
+
+    <div class="jsonp">
+        跨域的方法: 
+                   1.flash
+                   2.服务器代理中转
+                   3.iframe + document.domain
+                   4.iframe + location.hash
+                   5.iframe + window.name
+                   6.postMessage
+               *** 7.jsonp
+        
+        jsonp原理: web页面上script标签的src属性引入js文件不受跨域的影响，把资源直接放到script标签的src里面，
+                   相当于把数据以json的形式放到服务器上
+                   无法监控script的src的加载状态，不知道数据有没有获取完成，所以我们要事先定义好处理函数，
+                   这个处理函数就是jsonp
+
+        jsonp实现百度搜索框: 
+                   动态创建script标签，src为url地址，将script标签插入到页面中
+                   并定义好处理函数，通过解析url地址形参，将数据插入到页面中
+                   
+        window.onload = function(){
+            var $Input = document.getElementById('q');
+            var $Ul = document.getElementById('ul1');
+            $Input.onkeyup = function(){
+                if(this.value != ''){
+                    var $Script = document.createElement('script');
+                    $Script.src = 'http://suggestion.baidu.com/su?wd=' + this.value + '&cb=doJSON';
+                    document.body.appendChild($Script);
+                }else{
+                    $Ul.style.display = 'none';
+                }
+            }
+        function doJSON(data){
+            var $Ul = document.getElementById('ul1');
+            var html = '';
+            if (data.s.length){
+                $Ul.style.display = 'block';
+                for(var i = 0; i < data.s.length; i++){
+                    html += '<li><a href="https://www.baidu.com/s?wd=' + data.s[i] + '" target="_blank">' + data.s[i] + '</a></li>'
+                        } 
+                    $Ul.innerHTML = html; 
+                }else{ 
+                    $Ul.style.display = 'none'; 
+                }
+        }
+    </div>
+
+    <div class="webpack">
+        Webpack 是一个 CommonJs 和 AMD 模块打包器
+
+
+        var webpack = require('webpack'); // 引入webpack模块
+        module.exports = { // 配置模块
+            entry: './src/js/index.js', // 打包入口文件,一个对象或者一个字符串
+            output: { // 配置打包结果，一个对象
+                path: './build/', // 输出文件路径
+                filename: 'build.js' // 输出文件名字
+            },
+            module: { // 模块的处理逻辑
+                loaders: [ // 一系列加载器，一个数组
+                    {
+                        test: /\.js$/, // 正则表达式，匹配文件
+                        loader: 'babel-loader', // 加载器
+                    },
+                    {
+                        test: /\.css$/,
+                        loader: ['css-loader','style-loader']
+                    },
+                    {
+                        test: /\.less$/,
+                        loader: ['less-loader','css-loader','style-loader']
+                    },
+                    {
+                        test: /\.(jpg|png|gif)$/,
+                        loader: 'url-loader?limit=8192',
+                    }
+                ],
+                resolve: { // 对模块的解析
+                    extensions: ['','.js','.css','.less','.json'] // 自动补全识别的后缀
+                },
+                plugins: [ // 定义拆件，一个数组
+                    new webpack.ProvidePlugin({ // 引入拆件模块
+                        $: 'jquery',
+                        jQuery: 'jquery'
+                    })
+                ]
+            }
+        }
+    </div>
+
+    <div class="模块化">
+        webpack就是遵循commonjs开发的
+        commonjs: 
+                  1.定义模块 
+                  一个单独的文件就是一个模块。每一个模块都是一个单独的作用域，在该模块内部定义的变量，无法被其他模块读取，除非定义为global对象的属性
+                  2.模块输出
+                  模块只有一个出口，module.exports对象，把模块要输出的内容放入该对象
+                  3、加载模快
+                  加载模块使用require方法，该方法读取一个文件并执行，返回文件内部的module.exports对象
+
+        AMD: 异步模块定义(浏览器开发模块的一种规范)
+             AMD就是RequireJS在推广过程中定义出的规范
+
+             requireJS解决了:
+                        1.多个js文件可能有依赖关系，被依赖的文件需要早于依赖它的文件加载到浏览器 
+                        2.js加载的时候浏览器会停止页面渲染，加载文件越多，页面失去响应时间越长
+             requireJS:
+                        1.define用来定义模块
+                        define(['当前模块依赖的模块名称数组'],function(){})
+                        2.require用来加载模块
+                        require(['所依赖的模块'],function(){})
+        
+        CMD: 通用模块定义(浏览器开发模块的一种规范)
+             CMD就是SeaJS在推广过程中定义出的规范
+
+             SeaJS解决的问题和requireJS类似，在模块定义方式和模块加载时机上有所不同 
+
+             SeaJs: 
+                    1.define用来定义模块
+                    define(function(require, exports, module){})
+                    2.seajs用来加载模块
+                    seajs.use(['所依赖的模块'],function(){})
+
+        AMD与CMD的区别:
+                       1、AMD推崇依赖前置，在定义模块的时候就要声明其依赖的模块 
+                       2、CMD推崇就近依赖，只有在用到某个模块的时候再去require 
+    </div>
+
+    <div class="less sass">
+        less与sass的区别:
+            1.LESS是基于JavaScript运行,所以LESS是在客户端处
+            2.Sass是基于Ruby运行，是在服务器端处理
+
+        less运行:
+            1.下载一个你要的less.js脚本
+            2.创建一个文件来放置你的样式,index.less
+            3.添加到html head中
+
+        less与sass的优点和共性: 
+            1.混入————class中的class
+            2.参数混入————可以传递参数的class，就像函数一样
+                .border-radius( @radius: 3px ) {
+                    -webkit-border-radius: @radius;
+                    -moz-border-radius: @radius;
+                    border-radius: @radius;
+                }
+            3.嵌套规则————Class中嵌套class，从而减少重复的代码
+            4.运算————CSS中用上数学
+                @base_margin: 10px;
+                @double_margin: @base_margin * 2;
+            5.颜色功能————可以编辑颜色
+                @blue: #00c;  
+                @light_blue: @blue + #333;  
+                @dark_blue: @blue - #333; 
+            6.名字空间————分组样式，从而可以被调用
+                自己组中定义的自己调用，别的组调用不了
+            7.作用域————局部修改样式
+                @color: #00c; /* 蓝色 */
+                #header {
+                    @color: #c00; /* 红色 */
+                    border: 1px solid @color; /* 红色边框 */
+                }
+            8.JavaScript赋值————在CSS中使用JavaScript表达式赋值
+                @height = 'document.body.clientHeight';
+    </div>
+
+    <div class="git">
+        git分布式版本控制器
+        git常见指令
+
+        1.远成仓库命令:
+            检出仓库：$ git clone git://github.com/jquery/jquery.git
+            查看远程仓库：$ git remote -v
+            添加远程仓库：$ git remote add [name] [url]
+            删除远程仓库：$ git remote rm [name]
+            拉取远程仓库：$ git pull [remoteName] [localBranchName]
+            推送远程仓库：$ git push [remoteName] [localBranchName]
+
+        2.分支(branch)操作命令:
+            查看本地分支：$ git branch
+            查看远程分支：$ git branch -r
+            创建本地分支：$ git branch [name]
+            切换分支：$ git checkout [name]
+            创建新分支并立即切换到新分支：$ git checkout -b [name]
+            删除分支：$ git branch -d [name] 
+            合并分支：$ git merge [name]
+
+        git commit 提交 
+        git init   git仓库库初始化
+    </div>
+
+    <div class="github">
+        登录github建立存储库
+        点击public并点击Initialize this repository with a README
+        这么建立就有README了
+
+        建立一个文件夹，打开git
+
+        第一步
+        ssh -T git@github.com
+
+        第二步 克隆代码
+        git clone https://github.com/duanran1996/duanran_test.git
+        建立完仓库自动生成的网址
+
+        第三部 上传
+        进入duanran_test文件夹
+
+        若没有README
+        git init
+        touch README.md
+        git add README.md
+        git commit -m 'first_commit'             first_commit为新建的一个为文件夹，名字随意，里面有html页面
+        git remote add origin https://github.com/findingsea/myRepoForBlog.git
+        git push origin master
+
+        若有README
+        git add .
+        git commit -m 'first_commit'             first_commit为新建的一个为文件夹，名字随意，里面有html页面
+        git remote add origin https://github.com/findingsea/myRepoForBlog.git
+        git push origin master
+
+        若执行git remote add origin https://github.com/findingsea/myRepoForBlog.git出现:
+        fatal: remote origin already exists
+        在命令行输入: git remote rm origin
+
+        若执行git push origin master出现:
+        error:failed to push som refs to.......
+        在命令行输入: git pull origin master
+    </div>
+
+    <div class="媒体查询 响应式布局">
+        @media screen and ... {}
+        彩屏设备和...
+
+        @media only screen and ... {}
+        仅限彩屏设备和...
+
+        @media (min-width: 100px) and (max-width: 200px) {}
+        宽度为100~200px之间的设备
+
+        实现响应式布局:
+                      1. meta标签name=viewpoint禁止用户缩放;
+                      2. html{font-size: 62.5%} 使用rem;
+                      3. 宽度百分比，高度自适应，背景图片被撑开;
+                      4. media query适配各种不同的设备;
+    </div>
+
+    <div class="es6">
+        es6新功能: 
+                  1.let 和 const
+                  2.解构赋值
+                  3.字符串，数组，对象，函数的新功能
+                  4.class
+                  5.set 与 map 新结构
+                  6.promise
+
+        Promise:
+                 Promise是异步编程的一种解决方案
+
+                 特点:
+                      1.对象的状态不受外界影响
+                      2.一旦状态改变，就不会再变
+
+                 promise对象有三种状态
+                 Pending(进行中) Resolved(成功) Rejected(失败)
+
+                 Pending ——> Resolved
+                 Pending ——> Rejected
+
+                 Promise对象是一个构造函数,接受一个函数作为参数，这个函数的两个参数分别是resolve和reject
+                 resolve: 是将promise从Pending ——> Resolved
+                 reject: 是将promise从Pending ——> Rejected
+
+                 var promise = new Promise(function(resolve, reject) {
+                     if (/* 异步操作成功 */){
+                         resolve(value);
+                     } else {
+                         reject(error);
+                     }
+                 });
+
+                 promise.then指定Resolved状态和Reject状态的回调函数,这个方法可以接受两个回调函数作为参数
+                 第一个回调函数是Promise对象的状态变为Resolved时调用
+                 第二个回调函数是Promise对象的状态变成Rejected时调用。
+
+                 promise.all 和 promise.race 将多个promise实例包装成一个promise实例
+                 all为都成功promise状态成功
+                 race为有一个成功promise状态成功
+    </div>
+
+    <div class="react">
+        react.js
+        react-dom.js
+        browser.min.js
+
+        jsx语法 babel转码器
+        <> html语法
+        {} js语法
+
+        使用react:
+                  var App = react.createClass({
+                      render: function () {
+                          return ()
+                      }
+                  })
+                  const App extend react.component({
+                      render() {
+                          return ()
+                      }
+                  })
+
+        渲染到页面上:
+                     reactDom.render({
+                         <App/>,
+                         document.body
+                     })
+
+        react优点: 
+                   1.diff算法，虚拟dom
+                   在componentDidMount生命周期中用this.refs.div1获取到虚拟dom
+                   <div ref="div1"/>
+
+                   2.单项数据流
+                   在render中可以用this.props.data获取到从外向里传入的数据
+                   <div data={data}/>
+                   使用this.props.children很方便操纵子节点
+
+                   3.组件化
+                   一个功能为一个组件，便于团队化开发，更可以配合前段工程化工具开发
+                   <div>
+                       <Add/>
+                       <Sub/>
+                   </div>
+
+                   4.方便的引入类库，配合ajax获取数据进行开发
+                   在componentDidMount生命周期中实现
+
+                   5.可以方便的与用户进行互动
+                   在getInitialState中return一个值，在进行dom操作的时候用this.setState改变这个值
+
+                   6.提供了一些现成的方法
+                   如map方法，获取到数据直接进行操作，很方便
+                   React.Children.map                       
+    </div>
+
+    <div class="redux">
+        什么时候使用redux: 
+                          1.用户的使用方式复杂
+                          2.不同身份的用户有不同的使用方式（比如普通用户和管理员）
+                          3.多个用户之间可以协作
+                          4.与服务器大量交互，或者使用了WebSocket
+                          5.View要从多个来源获取数据
+        
+        redux 通过引入createStore，使用createStore方法和reducer创建store
+
+        redux工作流程:
+                      1.用户发出 Action，store.dispatch(action)
+
+                          Action 就是 View 发出的通知，表示 State 应该要发生变化了
+                          Action 是一个对象。其中的type属性是必须的，表示 Action 的名称
+                          const action = {
+                              type: 'ADD_TODO',
+                          };
+                          store.dispatch()是 View 发出 Action 的唯一方法
+
+                      2.Store 自动调用 Reducer，并且传入两个参数: 当前 State 和收到的 Action，Reducer 会返回新的 State
+
+                          state就是Store对象包含所有数据
+                          Reducer 是一个函数，它接受 Action 和当前 State 作为参数，返回一个新的 State
+
+                      3.State 一旦有变化，Store 就会调用监听函数，store.subscribe(listener)
+
+                          Store 允许使用store.subscribe方法设置监听函数，一旦 State 发生变化，就自动执行这个函数
+
+                      4.listener通过store.getState()得到当前状态,重新渲染view层
+
+        redux累加器: 
+            <script type="text/babel">
+                const reducer = (state = 0, action) => {
+                    switch (action.type) {
+                        case 'ADD': 
+                            return state + 1;
+                        case 'SUB': 
+                            return state - 1;
+                        default: return state;
+                    }
+                };
+                const store = Redux.createStore(reducer);
+                class Counter extends React.Component{
+                    render() {
+                        return (
+                            <div>
+                                <h1>{this.props.value}</h1>
+                                <button onClick={this.props.onAdd}>+</button>
+                                <button onClick={this.props.onSub}>-</button>
+                            </div>
+                        )
+                    }
+                }
+                const render = () => {
+                    ReactDOM.render(
+                        <Counter
+                            value={store.getState()}
+                            onAdd={() => store.dispatch({
+                                type: 'ADD'
+                            })}
+                            onSub={() => store.dispatch({
+                                type: 'SUB'
+                            })}
+                        />,
+                        document.getElementById('root')
+                    );
+                };
+                render();
+                store.subscribe(render);  
+            </script>  
+    </div>
+
+    <div class="nodejs">
+        文件管理: 
+                 const fs = require('fs')
+                 读文件: fs.readFile('文件','编码格式','回调函数function(err,data){}')
+                 写文件: fs.writeFile('文件','数据','编码格式','回调函数function(err){}')
+
+                 同步读取文件夹: let data = fs.readdirSync('路径','编码格式')
+                 异步读取文件夹: fs.readdir('路径','编码格式','回调函数function(err,data)')
+                 判断是不是文件夹: isDirectory()
+
+                 深度遍历使用同步的方法递归调用，广度遍历使用异步的方法递归调用
+
+                 读取流操作: let rs = fs.createReadStream('路径','读取方式，可以是一个对象')
+                 写入流操作: let ws = fs.createWriteStream('路径','写入方式，可以是一个对象')
+                            ws.write() 写入的东西
+
+                 文件监听: fs.watch();
+        
+        网络操作: 
+                 const http = require('http')
+                 使用var server = http.createServer(function(request,response){})创建一个服务器
+                 使用server.listen('端口号')用来监听
+
+                 客户端发送的请求为request:
+                     1.request.headers      请求头
+                     2.request.url          请求路径
+                     3.request.method       请求方法
+                     4.requset.httpVersion  http协议的版本
+
+                     请求主体的事件需要触发 requset.on('data',function(data){}) 来监听
+                     例如post发送的内容就在请求主体，可以用 decodeURIComponent(data) 获取
+
+                     请求结束的时候自动调用 request.on('end',function(){})
+
+                服务端发出的请求为response:
+                    1.response.end               用于声明整个请求已经发送完毕，每个响应必须调用一次，否则不结束网页会卡死
+                    2.response.write             用于往请求主体汇总写入数据，而且调用这个方法后，响应头以及响应行也不能再操作了
+                    3.response.statusCode        可以操作响应状态码
+                    4.response.statusMessage     可操作响应状态信息
+                    5.response.setHeader         设置http响应头的信息
+                    6.response.writeHeader       向客户端发送一个响应头，一个请求内最多只能调用一次
+
+                        response.writeHeader('状态码','关联数组对象，响应头的每一个属性')
+
+                        response.writeHeader('200',{
+                            'Content-Length': 'body.length',
+                            'Content-Type': 'text/plain'
+                        }) // 成功
+
+                        response.writeHeader('302',{
+                            'Location': 'xxx',
+                        }) // 重定向
+
+
+        const http = require('http');
+        const fs = require('fs');
+        var message;
+        fs.readFile('./data.json', 'utf-8', function (err, data) {
+            if(err) {
+                console.log(err);
+                return ;
+            }
+            message = JSON.parse(data).message;
+        })
+        const server = http.createServer(function (req, res) {
+            var user = ''
+            req.on('data', function (data) {
+                user = decodeURIComponent(data)
+            })
+            req.on('end', function () {
+                var userArr = user.split('&');
+                var useMes = [];
+                for(var i = 0 ; i < userArr.length ; i++) {
+                    useMes[i] = userArr[i].split('=')[1];
+                }
+                res.setHeader('Content-Type', 'text/html');
+                for(var i = 0 ; i < message.length ; i++) {
+                    if(useMes[0] == message[i].name && useMes[1] == message[i].pas) {
+                        res.writeHead(302, {
+                            'Location': 'http://www.taobao.com'
+                        });
+                        res.end();
+                    }
+                    else {
+                        if(i == message.length - 1) {
+                            res.writeHead(302, {
+                                'Location': 'http://www.baidu.com'
+                            });
+                            res.end();  
+                        }
+                    }
+                }       
+            })
+        })
+        server.listen(3000);
+        console.log('server is running');
+    </div>
+
+</body>
+</html>
