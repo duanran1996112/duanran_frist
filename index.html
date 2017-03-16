@@ -179,6 +179,8 @@
         func.prototype
         对象.__proto__
 
+        undefined null也都没有原型
+
         对象查看自身的构造函数: 对象.constructor
                               对象 instanceof 构造函数 --> true
 
@@ -309,7 +311,30 @@
         document.getElementsByName // 只有部分标签的name可以生效，表单、表单元素、img、iframe
         css选择器: querySelector() // ie7及以下的版本中没有这种方法
                    querySelectorAll() // ie7及以下的版本中没有这种方法
-        
+
+
+        创建元素节点 document.createElement()
+        创建文本节点 document.createTextNode()
+        创建注释节点 document.createComment()
+        创建文档碎片 document.createDocumentFragment()
+        ele.appendChild(child); // 将child插入到ele中的最后
+        ele.insertBefore(a,b) // 在父级为ele的元素中，将a插入到b前
+        ele.removeChild(child) // 在ele中将child删除
+        ele.replaceChild(new,old) // 在ele中用new替换old
+        ele.innerHTML // ele中的html结构
+        ele.innerText(老火狐不兼容)/ele.textContent(老ie不兼容) // ele中的文本结构
+        ele.setAttribute('属性','属性值')
+        ele.getAttribute('属性')
+
+        滚动条滚动的距离: document.body.scrollTop, window.pageYOffset 
+        视口尺寸: window.innerHeight window.innerwidth, document.body.clientHeight document.body.clientWidth
+
+
+
+        获取css样式 {
+            ie: dom.currentStyle[属性]
+            chrome: window.getComputedStyle(dom,伪元素)[属性]
+        }
 
         绑定事件 {
             ie: attachEvent(,)
@@ -331,27 +356,62 @@
             其他: return false;
         }
 
+        事件委托 {
+            火狐: event.srcElement
+            ie: event.target
+            chrome: 都支持
+        }
+
         事件处理模型: 先捕获后冒泡(从外向里，从里向外)
 
         事件处理机制: 1.注册事件
                      2.初始化事件参数
                      3.触发事件（事件捕获 事件执行 事件冒泡）
+        
+        鼠标事件:                 
+                 mousedown, mouseup ,click, // 点击事件先后顺序 (touchstart,touchend,tap) // event.targetTouches[0]
+                 mousemove, // 在目标元素上移动 (touchmove)
+                 mouseover, mouseout // 移入 移出
+                 touchcancel // 停止触摸时触发
+                 contextmenu // 右键出现事件
 
+                 e.button e.clientX/e.pageX
 
-        获取css样式 {
-            ie: dom.currentStyle[属性]
-            chrome: window.getComputedStyle(dom,伪元素)[属性]
-        }
+        键盘事件: 
+                 onkeydown,onkeypress,onkeyup
+
+                 e.keyCode
+
+        滚轮事件: 
+                 onscroll
+
+        重绘: 是元素自身的位置和宽高不变,只改变颜色的之类的属性而,不会导致后面的元素位置的变化,渲染树发生重绘
+        重排: 是元素自身的位置或者宽高改变了从而导致的整个页面的大范围移动的时候,渲染树发生重排，尽量避免
+                  
+                 
+
     </div>
 
     <div class="BOM">
+        window
+
         navigator.userAgent    前用户使用的是pc端还是移动端，是什么浏览器。
 
-        screen.availHeight/availWidth 可以查看除了window任务栏之外的屏幕的高度和宽度。
-        screen.height/width 返回显示器的屏幕的高度和宽度。   兼容的较少。
-        screen.deviceXDPI/deviceYDPI 返回显示屏幕的分辨率。
+        screen.availHeight/availWidth  可以查看除了window任务栏之外的屏幕的高度和宽度。
+        screen.height/width  返回显示器的屏幕的高度和宽度。   兼容的较少。
+        screen.deviceXDPI/deviceYDPI  返回显示屏幕的分辨率。
 
-        history，location，window
+        history.length  浏览历史的长度。
+        history.back()  进入到下一个历史页面。
+        history.forward()  返回到上一个历史页面。
+        history.go()  
+
+        location.host 返回当前的主机名 和 当前的 URL 端口号
+
+        正则表达式: 
+                   var reg = /xxx/gim
+                   reg.exec(str) // index属性查看比配到的位置
+                   str.replace(reg,function($,$1,$2){return xxx})
     </div>
 
     <div class="网络协议">
@@ -390,6 +450,17 @@
 
         同源策略: 只有在域名、协议名、端口号都相同。
                  不同源的客户端脚本在没有明确授权的情况下，是不能够读写对方的资源的。 
+
+        三次握手: 三次交互，建立连接
+                 1.客户单发送 SYN 数据包给服务器
+                 2.服务器回传一个 SYN/ACK 数据包
+                 3.客户端回传一个 ACK 数据包
+        
+        四次挥手: 客户端与服务器断开连接
+                 1.客户端发送 FIN/ACK 数据包给服务器
+                 2.服务器返回 ACK 报文
+                 3.服务器与客户端断开连接, 发送 FIN/ACK 报文
+                 4.客户端返回一个 ACK 报文, 挥手结束
 
         URI: 统一资源标识符
         URL: 统一资源定位符
@@ -468,10 +539,10 @@
         跨域的方法: 
                    1.flash
                    2.服务器代理中转
-                   3.iframe + document.domain
-                   4.iframe + location.hash
+                   3.iframe + document.domain // 主域名相同，子域名不同 document.domain=xxx
+                   4.iframe + location.hash // 用hash值传递数据，放到url里
                    5.iframe + window.name
-                   6.postMessage
+                   6.postMessage //  使用 ifr.contentWindow.postMessage 发送数据
                *** 7.jsonp
         
         jsonp原理: web页面上script标签的src属性引入js文件不受跨域的影响，把资源直接放到script标签的src里面，
@@ -713,10 +784,28 @@
 
     <div class="es6">
         es6新功能: 
-                  1.let 和 const
-                  2.解构赋值
-                  3.字符串，数组，对象，函数的新功能
-                  4.class
+                  1.let 和 const:
+                                  let产生一个块级作用域 const是不可改变的常量
+                  2.解构赋值:
+                             var {a,b} = {b:'234',a:123};
+                             ... 扩展运算符
+                  3.字符串: 
+                           `${}` 模板字符串
+                    数组: 
+                          Array.from() 将类数组转化为真正的数组
+                          Array.of(xx,xx,xx) 将一组数值转化成数组
+                    对象: 
+                          obj[xxx] 新增括号方式
+                          object.is(xxx,xxx) 判断是否相等 
+                          object.assign({},xxx,xxx) 用于对象合并
+                    函数:
+                          实参传递默认值
+                          => 箭头函数  形参=>返回值 没有this不可以用作构造函数
+                  4.class:
+                           class xxx {}
+                           constructor() {this.xxx = xxx} 在contructor中定义属性 
+                           class A extends B   A继承B, 也可在A中constructor中用super(xxx,xxx)调用父级constructor属性, 用super.xxx() 调用父级方法
+                           
                   5.set 与 map 新结构
                   6.promise
 
@@ -883,6 +972,17 @@
     </div>
 
     <div class="nodejs">
+        事件模块:
+                 const events = require('events');
+                 const event1 = new events();
+
+                 绑定事件: event1.on('xxx',function(){})
+                 绑定一次: event1.once('xxx',function(){})
+                 触发事件: event1.emit('xxx')
+                 删除事件: event1.removeListener('xxx',function(){})
+                 添加到事件头部队列: event1.prependListener('xxx',function(){})
+                 添加到一次事件头部队列: event1.prependOnceListener('xxx',function(){})
+
         文件管理: 
                  const fs = require('fs')
                  读文件: fs.readFile('文件','编码格式','回调函数function(err,data){}')
@@ -980,5 +1080,22 @@
         console.log('server is running');
     </div>
 
+    <div class="CSRF XSS">
+        CSRF: 跨站点伪装请求
+              CSRF请求可以直接通过我们登录状态，来伪造一个请求
+
+              预防措施: 在请求中加入随机数，让钓鱼网站无法正常伪造请求
+
+        XSS: 跨站点攻击
+             设法获取网站的cookie，通过cookie获取session，来登录网站搞破坏
+
+             预防措施: 
+                      XSS一般是通过写入html的标签或者js代码，来获取cookie信息的 
+                      将用户输入语句中的"javascript","jscript","vbscript",都用空白代替
+                      过滤和转换掉 "<" ">"，让攻击者无法构造HTML标记
+                    
+
+        CSEF与XSS区别: CSRF不需要js代码，只需要发送一个get或者post请求
+    </div>
 </body>
 </html>
