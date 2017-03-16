@@ -1104,7 +1104,7 @@
                     2.少使用with with会改变作用域链, 有可能导致我们的作用域链变长, 导致查询性能下降
                     3.减少作用域链查找, 尽量使用本作用域的变量
                     4.使用精简的算法减少时间复杂度
-                    
+
 
         CSRF: 跨站点伪装请求
               CSRF请求可以直接通过我们登录状态，来伪造一个请求
@@ -1121,6 +1121,35 @@
                     
 
         CSEF与XSS区别: CSRF不需要js代码，只需要发送一个get或者post请求
+    </div>
+
+    <div class="else">
+        优雅降级: 一开始就构建站点的完整功能，然后针对浏览器测试和修复。
+        渐进增强: 一开始只构建站点的最少特性，然后不断针对各浏览器追加功能。
+
+        a. 优雅降级是从复杂的现状开始，并试图减少用户体验的供给;
+        b. 渐进增强则是从一个非常基础的，能够起作用的版本开始，并不断扩充，以适应未来环境的需要;
+        c. 降级意味着往回看；而渐进增强则意味着朝前看，同时保证其根基处于安全地带;
+
+        websocket: WebSocket是与与http协议一样都基于TCP协议的
+                   WebSocket在建立握手连接时，数据是通过http协议传输的，但是在建立连接之后，真正的数据传输阶段是不需要http协议参与的
+                   能更好的节省服务器资源和带宽并达到实时通讯
+                   WebSocket协议的URL使用ws://开头，另外安全的WebSocket协议使用wss://开头
+
+                   var wsUri ="ws://echo.websocket.org/"
+                   websocket = new WebSocket(wsUri) // 参数是需要连接的服务器端的地址
+
+                   当Browser和WebSocketServer连接成功后，会触发onopen消息
+                   websocket.onopen = function(event) {}
+
+                   如果连接失败，发送、接收数据失败或者处理数据出现错误，会触发onerror消息
+                   websocket.onerror = function(event) {}
+
+                   当Browser接收到WebSocketServer发送过来的数据时，就会触发onmessage消息，参数中包含传输过来的数据
+                   websocket.onmessage = function(event) {}
+
+                   当Browser接收到WebSocketServer端发送的关闭连接请求时，就会触发onclose消息
+                   websocket.onclose = function(event) {}
     </div>
 </body>
 </html>
