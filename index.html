@@ -11,13 +11,13 @@
         行级元素 inline: span a em strong br
         块级元素 block: div h1~6 p ul li ol　
 
-        h5新标签: 
+        h5新标签:
                  非主体: header footer hgroup address
                  主体: article section nav aside
                  非结构性标签: audio video canvas svg
 
         audio video:
-        　　　　　　　自动播放: autoplay 
+        　　　　　　　自动播放: autoplay
                      播放: play
                      暂停: pause
                      已经播放时间: currentTine
@@ -26,7 +26,7 @@
                      音量: volume
                      播放速度: playbackRate
 
-        canvas: 
+        canvas:
                 使用canvas
                 var canvas =document.getElementById('myCanvas');
                 var ctx = canvas.getContext('2d');
@@ -42,7 +42,7 @@
                          var imageData = canvas.toDataURL(); // 将canvas的内容抽取成一张图片
                          dom.css('background-image', 'url(' + imageData + ')'); // 变成图片的src
 
-        svg: 
+        svg:
              使用svg
              <svg width=“500px” height=“500px”></svg>
 
@@ -50,7 +50,7 @@
              绘制矩形: <rect x="xxx" y="xxx" width="xxx" height="xxx" rx="xxx" ry="xxx"″></rect>
              绘制圆形: <circle r="xxx" cx="xxx" cy="xxx"></circle>
 
-             路径: 
+             路径:
                    <path d = "M xxx xxx L xxx xxx" /> 从(xxx,xxx)到(xxx,xxx)
                    <path d="Mxxx xxx H xxx V xxx"/> // H横向移动 V纵向移动
                    A 命令绘制圆弧
@@ -58,7 +58,7 @@
 
         html5获取当前地理位置: window.navigator.geolocation
 
-        html5拖拽: 
+        html5拖拽:
                   draggble="true"
                   dragstart 被拖拽元素 开始时触发
                   dragend 被拖拽元素 结束时触发
@@ -66,7 +66,7 @@
                   dragover 目标元素 拖拽元素在目标元素上移动
                   drop 目标元素 被拖拽的元素在目标元素上同时鼠标放开触发的事件
 
-        客户端存储: 
+        客户端存储:
                   localStorage: 存储量在5M以上，浏览器关闭不会失效
                   sessionStorage: 存储量在5M以上，浏览器关闭失效
                   cookie: 存储量不大于4k，过期失效
@@ -77,7 +77,7 @@
                            2.getItem(name) 获得属性值
                            3.removeItem(name) 移出属性值
                            4.clear() 清除所有属性
-                  
+
                   cookie
                   操作方法:
                            document.cookie = name+"="+value+时间戳 // 存储cookie
@@ -96,7 +96,7 @@
 
         css3选择器:
                    css3属性选择器 ele[attr="*(任意位置),^(开头),$(结尾)"]
-                   css3伪类选择器 
+                   css3伪类选择器
                                  :first-of-type
                                  :last-of-type
                                  :nth-of-type(n) 一组中的第几个
@@ -104,13 +104,13 @@
                    css3条件选择器
                                  E+F  F是E的兄弟节点，而且是E后面的第一个
                                  E~F  F是E后面的兄弟节点
-                        
+
         三维动画:
                  首先，设置transform-style: preverse-3d
                  其次，给父级设置景深: transform: prespective(xxx)
                  然后，使用tranform: translateZ(xxx)，形成三维效果
 
-        动画加速: 
+        动画加速:
                  1.GPU硬件加速模式，让浏览器在渲染动画的时候从CPU转向GPU
                  transform: transtion3d(0,0,0)
                  transform: translateZ(0)
@@ -118,18 +118,18 @@
                  backface-visibilty: hidden
                  prespective: xxx
 
-        多列布局: 
-                 父级wrapper设置 columns: xxx // 分成几分就写几 
+        多列布局:
+                 父级wrapper设置 columns: xxx // 分成几分就写几
                  column-gap: xxx //  布局两列中间宽度
                  column-rule: 20px solid green // 布局两列中间加一横线
-        
+
         盒子模型:
                  box-sizing: border-box // IE6混杂模式的盒模型 border+padding+content
                  box-sizing: content-box // 标准模式的盒模型 content
-                 
-        弹性盒子: 
+
+        弹性盒子:
                  父级元素: display: flex
-                 子级元素: 
+                 子级元素:
                           flex-grow // 比例分配剩余空间
                           flex-shrink // 按比例收缩超出空间
                           flex-basis // 设置伸缩基准值 相当于width: basis/(basis的总和) * 容器的宽度
@@ -189,8 +189,8 @@
         继承: 1.原型链继承
               2.构造函数 foo.call()
               3.共享原型 son.prototype = foo.prototype
-              4.object.create() 
-              5.圣杯模式 
+              4.object.create()
+              5.圣杯模式
                   var inherit = (function (){
                     var F = function(){};
                     return function (C,P){
@@ -218,7 +218,7 @@
     </div>
 
     <div class="类型转换">
-        基本数据类型: Number，String，Boolean，undefined(未定义)，null(空) 
+        基本数据类型: Number，String，Boolean，undefined(未定义)，null(空)
 
         原始值: Number，String，Boolean，undefined，null
 
@@ -239,7 +239,7 @@
                         tar[prop] = src[prop];
                     }
             }
-            return tar; 
+            return tar;
         }
 
         深层克隆: 利用递归调用的方法，当检测到源对象里面的这个属性值是引用类型的。
@@ -261,14 +261,14 @@
 
     <div class="数组去重">
         数组: 可以溢出写，不可以溢出读
-        数组上的方法: 
+        数组上的方法:
             改变原数组: reverse, // 倒叙
                        sort, // 负数的时候，表示a在前面，b在后面。正数的时候，表示a在后面，b在前面。
                        push,pop, // 后进后出
                        shift,unshift, // 前出前进
                        splice // 删除
             不改变原数组: concat,join
-    
+
 
         数组去重: 数组中的这个数据出现过一次之后，就在一个对象中将这个元素的值的位置标记成1。
                  后面如果出现相同的属性值，因为这个位置已经是1了，所以就不会添加到新数组里面，从而达到了去重的效果。
@@ -283,7 +283,7 @@
                     }
             }
             return arr;
-        }  
+        }
 
 
         es5数组新方法: foreach(改变原数组)，
@@ -296,7 +296,7 @@
                    constructor和instanceof。
                    Object.prototype.toString.call(arr) === ‘[object Array]’ (不会发生窗体混淆)
     </div>
-    
+
     <div class="DOM">
         元素节点——1
         属性节点——2
@@ -326,7 +326,7 @@
         ele.setAttribute('属性','属性值')
         ele.getAttribute('属性')
 
-        滚动条滚动的距离: document.body.scrollTop, window.pageYOffset 
+        滚动条滚动的距离: document.body.scrollTop, window.pageYOffset
         视口尺寸: window.innerHeight window.innerwidth, document.body.clientHeight document.body.clientWidth
 
 
@@ -367,8 +367,8 @@
         事件处理机制: 1.注册事件
                      2.初始化事件参数
                      3.触发事件（事件捕获 事件执行 事件冒泡）
-        
-        鼠标事件:                 
+
+        鼠标事件:
                  mousedown, mouseup ,click, // 点击事件先后顺序 (touchstart,touchend,tap) // event.targetTouches[0]
                  mousemove, // 在目标元素上移动 (touchmove)
                  mouseover, mouseout // 移入 移出
@@ -377,19 +377,16 @@
 
                  e.button e.clientX/e.pageX
 
-        键盘事件: 
+        键盘事件:
                  onkeydown,onkeypress,onkeyup
 
                  e.keyCode
 
-        滚轮事件: 
+        滚轮事件:
                  onscroll
 
         重绘: 是元素自身的位置和宽高不变,只改变颜色的之类的属性而,不会导致后面的元素位置的变化,渲染树发生重绘
         重排: 是元素自身的位置或者宽高改变了从而导致的整个页面的大范围移动的时候,渲染树发生重排，尽量避免
-                  
-                 
-
     </div>
 
     <div class="BOM">
@@ -404,18 +401,18 @@
         history.length  浏览历史的长度。
         history.back()  进入到下一个历史页面。
         history.forward()  返回到上一个历史页面。
-        history.go()  
+        history.go()
 
         location.host 返回当前的主机名 和 当前的 URL 端口号
 
-        正则表达式: 
+        正则表达式:
                    var reg = /xxx/gim
                    reg.exec(str) // index属性查看比配到的位置
                    str.replace(reg,function($,$1,$2){return xxx})
     </div>
 
     <div class="网络协议">
-        状态码: 
+        状态码:
                 1xx   信息性状态码
 
                 2xx   成功状态码
@@ -437,10 +434,10 @@
                 404   服务器上没有该资源
 
                 5xx   服务器错误状态码
-                500   服务器端在执行请求时发生错误  
-                503   服务器暂时处于超负载或正在停机维护，无法处理请求 
+                500   服务器端在执行请求时发生错误
+                503   服务器暂时处于超负载或正在停机维护，无法处理请求
 
-        get和post的区别: 
+        get和post的区别:
                 get                                      post
                 主动的或被动的                            主动的
                 文本                                     文本或二进制
@@ -449,13 +446,13 @@
                 数据在url历史缓存中                       数据不在url历史缓存中
 
         同源策略: 只有在域名、协议名、端口号都相同。
-                 不同源的客户端脚本在没有明确授权的情况下，是不能够读写对方的资源的。 
+                 不同源的客户端脚本在没有明确授权的情况下，是不能够读写对方的资源的。
 
         三次握手: 三次交互，建立连接
                  1.客户单发送 SYN 数据包给服务器
                  2.服务器回传一个 SYN/ACK 数据包
                  3.客户端回传一个 ACK 数据包
-        
+
         四次挥手: 客户端与服务器断开连接
                  1.客户端发送 FIN/ACK 数据包给服务器
                  2.服务器返回 ACK 报文
@@ -470,10 +467,10 @@
     </div>
 
     <div class="ajax">
-        AJAX最重要的两个对象: 
+        AJAX最重要的两个对象:
                              new XMLHttpRequest()
                              new ActiveXObject(‘Microsoft.XMLHTTP’)
-        
+
         AJAX优点:
                   1.页面无刷新
                   2.使用异步的形式与服务器进行通信
@@ -483,9 +480,9 @@
                   1.不支持浏览器的后退机制
                   2.对搜索引擎支持较弱
                   3.违背了url和资源定位的初衷支持较弱
-        
+
         AJAX步骤:
-                  1.创建ajax对象 
+                  1.创建ajax对象
                       XMLHttpRequest();
                       ActiveXObject('Mircosoft.XMLHTTP');
 
@@ -494,7 +491,7 @@
                       send()
 
                   3.监听对象状态改变
-                      readyState == 4 
+                      readyState == 4
                       status == 200
                       callBack(responseText);
 
@@ -512,9 +509,9 @@
                          xhr = new window.XMLHttpRequest();
                      }else {
                          xhr = new ActiveXObject('Mircosoft.XMLHTTP');
-                     }			
+                     }
                      if(method == 'get') {
-                         url += '?' + data + new Date().getTime(); 
+                         url += '?' + data + new Date().getTime();
                          xhr.open('get', url, flag);
                      }else {
                          xhr.open('post', url, flag);
@@ -531,12 +528,12 @@
                          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urle');
                          // 设置发送数据的格式
                          xhr.send(data);
-                     }	
-                 }           
+                     }
+                 }
     </div>
 
     <div class="jsonp">
-        跨域的方法: 
+        跨域的方法:
                    1.flash
                    2.服务器代理中转
                    3.iframe + document.domain // 主域名相同，子域名不同 document.domain=xxx
@@ -544,16 +541,16 @@
                    5.iframe + window.name
                    6.postMessage //  使用 ifr.contentWindow.postMessage 发送数据
                *** 7.jsonp
-        
+
         jsonp原理: web页面上script标签的src属性引入js文件不受跨域的影响，把资源直接放到script标签的src里面，
                    相当于把数据以json的形式放到服务器上
                    无法监控script的src的加载状态，不知道数据有没有获取完成，所以我们要事先定义好处理函数，
                    这个处理函数就是jsonp
 
-        jsonp实现百度搜索框: 
+        jsonp实现百度搜索框:
                    动态创建script标签，src为url地址，将script标签插入到页面中
                    并定义好处理函数，通过解析url地址形参，将数据插入到页面中
-                   
+
         window.onload = function(){
             var $Input = document.getElementById('q');
             var $Ul = document.getElementById('ul1');
@@ -573,10 +570,10 @@
                 $Ul.style.display = 'block';
                 for(var i = 0; i < data.s.length; i++){
                     html += '<li><a href="https://www.baidu.com/s?wd=' + data.s[i] + '" target="_blank">' + data.s[i] + '</a></li>'
-                        } 
-                    $Ul.innerHTML = html; 
-                }else{ 
-                    $Ul.style.display = 'none'; 
+                        }
+                    $Ul.innerHTML = html;
+                }else{
+                    $Ul.style.display = 'none';
                 }
         }
     </div>
@@ -626,8 +623,8 @@
 
     <div class="模块化">
         webpack就是遵循commonjs开发的
-        commonjs: 
-                  1.定义模块 
+        commonjs:
+                  1.定义模块
                   一个单独的文件就是一个模块。每一个模块都是一个单独的作用域，在该模块内部定义的变量，无法被其他模块读取，除非定义为global对象的属性
                   2.模块输出
                   模块只有一个出口，module.exports对象，把模块要输出的内容放入该对象
@@ -638,28 +635,28 @@
              AMD就是RequireJS在推广过程中定义出的规范
 
              requireJS解决了:
-                        1.多个js文件可能有依赖关系，被依赖的文件需要早于依赖它的文件加载到浏览器 
+                        1.多个js文件可能有依赖关系，被依赖的文件需要早于依赖它的文件加载到浏览器
                         2.js加载的时候浏览器会停止页面渲染，加载文件越多，页面失去响应时间越长
              requireJS:
                         1.define用来定义模块
                         define(['当前模块依赖的模块名称数组'],function(){})
                         2.require用来加载模块
                         require(['所依赖的模块'],function(){})
-        
+
         CMD: 通用模块定义(浏览器开发模块的一种规范)
              CMD就是SeaJS在推广过程中定义出的规范
 
-             SeaJS解决的问题和requireJS类似，在模块定义方式和模块加载时机上有所不同 
+             SeaJS解决的问题和requireJS类似，在模块定义方式和模块加载时机上有所不同
 
-             SeaJs: 
+             SeaJs:
                     1.define用来定义模块
                     define(function(require, exports, module){})
                     2.seajs用来加载模块
                     seajs.use(['所依赖的模块'],function(){})
 
         AMD与CMD的区别:
-                       1、AMD推崇依赖前置，在定义模块的时候就要声明其依赖的模块 
-                       2、CMD推崇就近依赖，只有在用到某个模块的时候再去require 
+                       1、AMD推崇依赖前置，在定义模块的时候就要声明其依赖的模块
+                       2、CMD推崇就近依赖，只有在用到某个模块的时候再去require
     </div>
 
     <div class="less sass">
@@ -672,7 +669,7 @@
             2.创建一个文件来放置你的样式,index.less
             3.添加到html head中
 
-        less与sass的优点和共性: 
+        less与sass的优点和共性:
             1.混入————class中的class
             2.参数混入————可以传递参数的class，就像函数一样
                 .border-radius( @radius: 3px ) {
@@ -685,9 +682,9 @@
                 @base_margin: 10px;
                 @double_margin: @base_margin * 2;
             5.颜色功能————可以编辑颜色
-                @blue: #00c;  
-                @light_blue: @blue + #333;  
-                @dark_blue: @blue - #333; 
+                @blue: #00c;
+                @light_blue: @blue + #333;
+                @dark_blue: @blue - #333;
             6.名字空间————分组样式，从而可以被调用
                 自己组中定义的自己调用，别的组调用不了
             7.作用域————局部修改样式
@@ -718,10 +715,10 @@
             创建本地分支：$ git branch [name]
             切换分支：$ git checkout [name]
             创建新分支并立即切换到新分支：$ git checkout -b [name]
-            删除分支：$ git branch -d [name] 
+            删除分支：$ git branch -d [name]
             合并分支：$ git merge [name]
 
-        git commit 提交 
+        git commit 提交
         git init   git仓库库初始化
     </div>
 
@@ -783,29 +780,29 @@
     </div>
 
     <div class="es6">
-        es6新功能: 
+        es6新功能:
                   1.let 和 const:
                                   let产生一个块级作用域 const是不可改变的常量
                   2.解构赋值:
                              var {a,b} = {b:'234',a:123};
                              ... 扩展运算符
-                  3.字符串: 
+                  3.字符串:
                            `${}` 模板字符串
-                    数组: 
+                    数组:
                           Array.from() 将类数组转化为真正的数组
                           Array.of(xx,xx,xx) 将一组数值转化成数组
-                    对象: 
+                    对象:
                           obj[xxx] 新增括号方式
-                          object.is(xxx,xxx) 判断是否相等 
+                          object.is(xxx,xxx) 判断是否相等
                           object.assign({},xxx,xxx) 用于对象合并
                     函数:
                           实参传递默认值
                           => 箭头函数  形参=>返回值 没有this不可以用作构造函数
                   4.class:
                            class xxx {}
-                           constructor() {this.xxx = xxx} 在contructor中定义属性 
+                           constructor() {this.xxx = xxx} 在contructor中定义属性
                            class A extends B   A继承B, 也可在A中constructor中用super(xxx,xxx)调用父级constructor属性, 用super.xxx() 调用父级方法
-                           
+
                   5.set 与 map 新结构
                   6.promise
 
@@ -870,7 +867,7 @@
                          document.body
                      })
 
-        react优点: 
+        react优点:
                    1.diff算法，虚拟dom
                    在componentDidMount生命周期中用this.refs.div1获取到虚拟dom
                    <div ref="div1"/>
@@ -895,17 +892,17 @@
 
                    6.提供了一些现成的方法
                    如map方法，获取到数据直接进行操作，很方便
-                   React.Children.map                       
+                   React.Children.map
     </div>
 
     <div class="redux">
-        什么时候使用redux: 
+        什么时候使用redux:
                           1.用户的使用方式复杂
                           2.不同身份的用户有不同的使用方式（比如普通用户和管理员）
                           3.多个用户之间可以协作
                           4.与服务器大量交互，或者使用了WebSocket
                           5.View要从多个来源获取数据
-        
+
         redux 通过引入createStore，使用createStore方法和reducer创建store
 
         redux工作流程:
@@ -929,7 +926,7 @@
 
                       4.listener通过store.getState()得到当前状态,重新渲染view层
 
-        redux累加器: 
+        redux累加器:
             <script type="text/babel">
                 const reducer = (state = 0, action) => {
                     switch (action.type) {
@@ -967,8 +964,8 @@
                     );
                 };
                 render();
-                store.subscribe(render);  
-            </script>  
+                store.subscribe(render);
+            </script>
     </div>
 
     <div class="nodejs">
@@ -983,7 +980,7 @@
                  添加到事件头部队列: event1.prependListener('xxx',function(){})
                  添加到一次事件头部队列: event1.prependOnceListener('xxx',function(){})
 
-        文件管理: 
+        文件管理:
                  const fs = require('fs')
                  读文件: fs.readFile('文件','编码格式','回调函数function(err,data){}')
                  写文件: fs.writeFile('文件','数据','编码格式','回调函数function(err){}')
@@ -999,8 +996,8 @@
                             ws.write() 写入的东西
 
                  文件监听: fs.watch();
-        
-        网络操作: 
+
+        网络操作:
                  const http = require('http')
                  使用var server = http.createServer(function(request,response){})创建一个服务器
                  使用server.listen('端口号')用来监听
@@ -1080,7 +1077,7 @@
         console.log('server is running');
     </div>
 
-    <div class="网络性能呢优化 CSRF XSS">
+    <div class="网络性能优化 CSRF XSS">
         性能优化:
                  页面级优化
                     1.减少HTTP请求数
@@ -1094,9 +1091,9 @@
                     4.懒加载, 在需要资源的时候才加载资源
                     5.将CSS放到Head中, 防止加载不出来css样式
                     6.减少不必要的HTTP跳转
-                    7.避免重复的资源请求    
+                    7.避免重复的资源请求
                     8.合理的使用图片预加载, 提升页面效果
-                
+
                  代码级优化
                     1.DOM
                         * domready, 在页面所有dom加载完成后, 在进行js操作
@@ -1114,11 +1111,11 @@
         XSS: 跨站点攻击
              设法获取网站的cookie，通过cookie获取session，来登录网站搞破坏
 
-             预防措施: 
-                      XSS一般是通过写入html的标签或者js代码，来获取cookie信息的 
+             预防措施:
+                      XSS一般是通过写入html的标签或者js代码，来获取cookie信息的
                       将用户输入语句中的"javascript","jscript","vbscript",都用空白代替
                       过滤和转换掉 "<" ">"，让攻击者无法构造HTML标记
-                    
+
 
         CSEF与XSS区别: CSRF不需要js代码，只需要发送一个get或者post请求
     </div>
