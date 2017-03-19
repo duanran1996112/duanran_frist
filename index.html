@@ -11,6 +11,18 @@
         行级元素 inline: span a em strong br
         块级元素 block: div h1~6 p ul li ol　
 
+        meta标签:
+                 <meta name="keywords" content="xxx"/>
+                 用于告诉搜索引擎，你网页的关键字
+                 <meta name="description" content="xxx"/> 
+                 用于告诉搜索引擎，你网站的主要内容
+                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                 用于设计移动端网页
+                 <meta name="robots" content="none"/> 
+                 用于搜索引擎爬虫的索引方式 
+                 <meta name="author" content="xxx"/>
+                 用于标注网页的作者
+
         h5新标签:
                  非主体: header footer hgroup address
                  主体: article section nav aside
@@ -39,7 +51,7 @@
                          var pixel = ctx.getImageData(0, 0, canvasH, canvasH) // 获取图片像素信息，受到同源策略的限制
                          gaussBlur(pixel); // 高斯模糊
                          ctx.putImageData(pixel, 0, 0); // 将像素信息放回canvas
-                         var imageData = canvas.toDataURL(); // 将canvas的内容抽取成一张图片
+                         var imageData = canvas.toDataURL(); // 将canvas的内容抽取成一张图片，受到同源策略的限制
                          dom.css('background-image', 'url(' + imageData + ')'); // 变成图片的src
 
         svg:
@@ -93,6 +105,28 @@
         class、属性、伪类	 10
         标签、伪元素		 1
         通配符			   0
+
+        display属性: 
+            none	此元素不会被显示。
+            block	此元素将显示为块级元素，此元素前后会带有换行符。
+            inline	默认。此元素会被显示为内联元素，元素前后没有换行符。
+            inline-block	行内块元素
+            list-item	此元素会作为列表显示。
+            run-in	此元素会根据上下文作为块级元素或内联元素显示。
+            table	此元素会作为块级表格来显示（类似 <table>），表格前后带有换行符。
+            inline-table	此元素会作为内联表格来显示（类似 <table>），表格前后没有换行符。
+            table-row-group	此元素会作为一个或多个行的分组来显示（类似 <tbody>）。
+            table-header-group	此元素会作为一个或多个行的分组来显示（类似 <thead>）。
+            table-footer-group	此元素会作为一个或多个行的分组来显示（类似 <tfoot>）。
+            table-row	此元素会作为一个表格行显示（类似 <tr>）。
+            table-column-group	此元素会作为一个或多个列的分组来显示（类似 <colgroup>）。
+            table-column	此元素会作为一个单元格列显示（类似 <col>）
+            table-cell	此元素会作为一个表格单元格显示（类似 <td> 和 <th>）
+            table-caption	此元素会作为一个表格标题显示（类似 <caption>）
+            inherit 从父元素继承 display 属性的值
+            flex css3弹性盒子
+
+        postion属性: absolute relative fixed static inherit
 
         css3选择器:
                    css3属性选择器 ele[attr="*(任意位置),^(开头),$(结尾)"]
@@ -172,9 +206,17 @@
         }
     </div>
 
-    <div class="原型链">
+    <div class="原型链 bind">
+        bind: 
+              bind函数用于将当前函数和指定对象绑定，返回一个新的函数
+              当新函数被调用时，代码会在指定对象的上下文中执行
+        call，apply: 
+                     Function.prototype的一个方法
+                     把obj的this绑定到当前对象，这时候当前对象具备了obj的属性和方法
+
         原型: 原型是function对象的一个属性，它是构造函数制造出来的对象的公共祖先。
-              通过该构造函数产生的对象，可以继承该原型的属性和方法。原型也是对象。
+              通过这个构造函数产生的对象，可以继承该原型的属性和方法。
+              原型也是对象。
 
         func.prototype
         对象.__proto__
@@ -184,7 +226,7 @@
         对象查看自身的构造函数: 对象.constructor
                               对象 instanceof 构造函数 --> true
 
-        原型链: 原型的对象自然还有自己的原型，这样的原型上还有原型的结构就构成了原型链。
+        原型链: 原型的对象还有自己的原型，这样原型上还有原型的结构就构成了原型链。
 
         继承: 1.原型链继承
               2.构造函数 foo.call()
@@ -222,7 +264,7 @@
 
         原始值: Number，String，Boolean，undefined，null
 
-        引用值: object(array)，function
+        引用值: object(array)，function，date()，regExp()
 
         默认为false的值: undefined，null，""，NaN，0，false
 
@@ -341,15 +383,19 @@
             chrome: addEventListener(,,false) // 是否开启事件捕获
             其他: 句柄绑定 onclick
         }
+
         解除事件 {
             ie: detachEvent(,)
             chrome: addEventListener(,,false)
             其他: onclick = null
         }
+
         取消冒泡 {
             ie: event.cancelBubble = true
             chrome: event.stopPropagation();
         }
+        focus、blur、change、submit、reset、select等方法就没有事件冒泡现象
+
         取消默认事件 {
             ie: e.returnValue = false
             chrome: e.preventDefault()
@@ -361,6 +407,8 @@
             ie: event.target
             chrome: 都支持
         }
+        父级添加事件，由于事件冒泡，点击子元素会调用父元素上的方法，这种方法被称为事件委托
+        被点击子元素被称为事件源对象
 
         事件处理模型: 先捕获后冒泡(从外向里，从里向外)
 
@@ -404,6 +452,10 @@
         history.go()
 
         location.host 返回当前的主机名 和 当前的 URL 端口号
+        location.search 设置或返回从问好开始的URL（查询部分）
+        location.hash 可以用来获取或设置页面的标签值
+        location.reload 可以重新加载当前页面
+        location.href 将页面重定向
 
         正则表达式:
                    var reg = /xxx/gim
@@ -416,26 +468,38 @@
                 1xx   信息性状态码
 
                 2xx   成功状态码
-                200   请求已经被服务器正常处理
-                204   请求处理成功，但是没有资源可以返回。
-                206   表示客户端进行了范围请求，而服务器成功执行了这部分的GET请求
+          **    200   请求已经被服务器正常处理
+                201   服务器在请求的响应中建立了新文档
+                202   客户端请求正在被执行，但还没有处理完
+                203   文档被正常的返回
+          **    204   请求处理成功，但是没有资源可以返回
+                205   重置内容
+          **    206   表示客户端进行了范围请求，而服务器成功执行了这部分的GET请求
 
                 3xx   重定向状态码
-                301   永久性重定向
-                302   临时性重定向
-                303   请求的对应资源存在着另一个URI
-                304   资源已找到，但是未符合要求
-                307   临时重定向
+                300   请求的文档可以在多个地方找到
+          **    301   永久性重定向
+          **    302   临时性重定向
+          **    303   请求的对应资源存在着另一个URI
+          **    304   资源已找到，但是未符合要求
+                305   使用代理
+          **    307   临时重定向
 
                 4xx   客户端错误状态码
-                400   请求报文中存在语法错误
-                401   发送的请求需要有通过HTTP认证的认证信息
-                403   不允许访问该资源
-                404   服务器上没有该资源
+          **    400   请求报文中存在语法错误
+          **    401   发送的请求需要有通过HTTP认证的认证信息
+          **    403   不允许访问该资源
+          **    404   服务器上没有该资源
+                405   请求方法对某些特定的资源不允许使用
+                406   无法访问
 
                 5xx   服务器错误状态码
-                500   服务器端在执行请求时发生错误
-                503   服务器暂时处于超负载或正在停机维护，无法处理请求
+          **    500   服务器端在执行请求时发生错误
+                501   服务器不具备完成请求的功能
+                502   服务器作为网关或代理，从上游服务器收到无效响应
+          **    503   服务器暂时处于超负载或正在停机维护，无法处理请求
+                504   服务器作为网关或代理，但是没有及时从上游服务器收到请求
+                505   服务器不支持请求中所用的 HTTP 协议版本
 
         get和post的区别:
                 get                                      post
@@ -464,6 +528,13 @@
 
         HTTP协议是TCP/IP协议的子集。
         TCP/IP分层管理的结构是: 应用层、传输层、网络层、数据链路层。
+        应用层是HTTP协议
+        传输层是TCP协议
+        网络层是IP协议
+        链路层是网络
+
+        请求头 :请求方法 请求URL HTTP协议以及版本
+        响应头 :报文协议以及HTTP版本 状态码以 状态描述
     </div>
 
     <div class="ajax">
@@ -542,14 +613,28 @@
                    6.postMessage //  使用 ifr.contentWindow.postMessage 发送数据
                *** 7.jsonp
 
-        jsonp原理: web页面上script标签的src属性引入js文件不受跨域的影响，把资源直接放到script标签的src里面，
-                   相当于把数据以json的形式放到服务器上
-                   无法监控script的src的加载状态，不知道数据有没有获取完成，所以我们要事先定义好处理函数，
-                   这个处理函数就是jsonp
+        什么是jsonp: 
+                    web页面上script标签的src属性引入js文件不受跨域的影响，把资源直接放到script标签的src里面，相当于把数据以json的形式放到服务器上
+                    无法监控script的src的加载状态，不知道数据有没有获取完成，所以我们要事先定义好处理函数，这个处理函数就是jsonp
+
+        JSONP原理: 
+                   script标签的src向服务器发送了一个GET请求，同时将约定好的参数写到url上面。
+                   同源策略只限制客户端，服务器端没有这个限制，因此服务器端接收到这个请求之后会响应它。
+                   根据url上面的参数自动生成一串json数据并且格式化，然后返回到发送请求的页面上。
+                   script标签获取到这个字符串之后自动转化成js对象，然后执行这一段代码。
+ 
+        jsonp优点: 
+                  1.JSONP可以跨越同源策略
+                  2.兼容性好
+                  3.可以用callback处理函数处理，处理函数给了调用方
+        jsonp缺点: 
+                  1.只支持GET请求而不支持POST请求
+                  2.调用失败的时候不会返回各种HTTP状态码
+                  3.安全性不高
 
         jsonp实现百度搜索框:
                    动态创建script标签，src为url地址，将script标签插入到页面中
-                   并定义好处理函数，通过解析url地址形参，将数据插入到页面中
+                   并定义好处理函数，通过解析url地址中的形参，将数据插入到页面中
 
         window.onload = function(){
             var $Input = document.getElementById('q');
@@ -580,8 +665,12 @@
 
     <div class="webpack">
         Webpack 是一个 CommonJs 和 AMD 模块打包器
-
-
+        webpack优点:
+            按着配置文件走，加载各式各样的loader
+		    JS模块化提高了代码复用性，资源文件可以合理地进行缓存.
+			Webpack处理后，输出的静态文件只剩下js与png，而css、less等其他的文件都合并到了js中
+			在Webpack当中，所有资源的都是模块，模块可以通过通过AMD或者CMD规范加载
+        
         var webpack = require('webpack'); // 引入webpack模块
         module.exports = { // 配置模块
             entry: './src/js/index.js', // 打包入口文件,一个对象或者一个字符串
@@ -660,9 +749,13 @@
     </div>
 
     <div class="less sass">
+        less主要是为了模块化迭代速度快
+
         less与sass的区别:
             1.LESS是基于JavaScript运行,所以LESS是在客户端处
             2.Sass是基于Ruby运行，是在服务器端处理
+            3.Sass是一种CSS的开发工具，提供了许多便利的写法，节省了设计者的时间，使得CSS的开发，变得简单和可维护
+              Sass里封装了好多方法，可以直接拿去作为微型js来用
 
         less运行:
             1.下载一个你要的less.js脚本
@@ -671,6 +764,10 @@
 
         less与sass的优点和共性:
             1.混入————class中的class
+                .one {
+                    height; 100px;
+                    .tow
+                }
             2.参数混入————可以传递参数的class，就像函数一样
                 .border-radius( @radius: 3px ) {
                     -webkit-border-radius: @radius;
@@ -718,8 +815,19 @@
             删除分支：$ git branch -d [name]
             合并分支：$ git merge [name]
 
-        git commit 提交
-        git init   git仓库库初始化
+        git init     git仓库库初始化
+        git clone    拷贝一个 Git 仓库到本地
+        git add      将该文件添加到缓存
+        git status   以查看在你上次提交之后是否有修改
+        git diff     来查看执行 git status 的结果的详细信息
+        git commit   将缓存区内容添加到仓库中
+        git reset    命令用于取消已缓存的内容
+        git branch   开启一个新的分支
+        git checkout 切换到分支上
+        git rm       删除文件
+        git push     将暂存区的文件提交到远程仓库
+        git pull     将远程仓库的修改拉取到本地
+        
     </div>
 
     <div class="github">
@@ -774,12 +882,14 @@
 
         实现响应式布局:
                       1. meta标签name=viewpoint禁止用户缩放;
-                      2. html{font-size: 62.5%} 使用rem;
-                      3. 宽度百分比，高度自适应，背景图片被撑开;
+                      2. html{font-size: 62.5%} 使用rem; rem根据html文档相对大小，并可以设置宽高。em相对于父级大小。
+                      3. 长页面宽度百分比，高度自适应，背景图片被撑开; 短页面宽度高度百分比;
                       4. media query适配各种不同的设备;
     </div>
 
     <div class="es6">
+        浏览器不兼容es6使用babel
+
         es6新功能:
                   1.let 和 const:
                                   let产生一个块级作用域 const是不可改变的常量
@@ -805,6 +915,21 @@
 
                   5.set 与 map 新结构
                   6.promise
+                  7.reflect:
+                             reflect不是构造函数，是全局对象
+                             reflect全局对象有一些方法
+                             
+                             1.reflect.apply  =  function.prototype.apply()
+                               Reflect可以与Proxy联合使用
+
+                             2.Reflect.construct  实例化构造函数
+
+                             ** 用于对象上的操作
+                             3.Reflect.defineProperty  给对象赋属性值，并返回布尔值
+                             4.Reflect.deleteProperty
+                             5.Reflect.get
+                             6.Reflect.set
+                             7.Reflect.in  =  xxx in obj
 
         Promise:
                  Promise是异步编程的一种解决方案
@@ -855,7 +980,7 @@
                           return ()
                       }
                   })
-                  const App extend react.component({
+                  const App extends react.component({
                       render() {
                           return ()
                       }
@@ -866,6 +991,14 @@
                          <App/>,
                          document.body
                      })
+        
+        react生命周期:
+			Mounting(组件生成时触发)
+			getDefaultProps:
+			getInitialState:
+			componentWillMount:
+			render:
+			componentDidMount:
 
         react优点:
                    1.diff算法，虚拟dom
@@ -893,6 +1026,9 @@
                    6.提供了一些现成的方法
                    如map方法，获取到数据直接进行操作，很方便
                    React.Children.map
+
+        vue: 渐进式框架，vue 的核心库只关注视图层
+        angular: MVC、模块化、自动化双向数据绑定
     </div>
 
     <div class="redux">
@@ -906,7 +1042,7 @@
         redux 通过引入createStore，使用createStore方法和reducer创建store
 
         redux工作流程:
-                      1.用户发出 Action，store.dispatch(action)
+                      1.用户发出 Action，通过store.dispatch(action)发出action
 
                           Action 就是 View 发出的通知，表示 State 应该要发生变化了
                           Action 是一个对象。其中的type属性是必须的，表示 Action 的名称
@@ -1081,7 +1217,7 @@
         性能优化:
                  页面级优化
                     1.减少HTTP请求数
-                        * 从设计实现层面简化页面
+                        * 从设计层简化页面
                         * 合理设置HTTP缓存
                         * 资源合并与压缩 js,css,img 都可以用压缩软件进行压缩
                         * css雪碧图, 切图的时候将一些icon放到一个图片资源中, 然后通过改变位置来获取需要的图片
@@ -1117,7 +1253,7 @@
                       过滤和转换掉 "<" ">"，让攻击者无法构造HTML标记
 
 
-        CSEF与XSS区别: CSRF不需要js代码，只需要发送一个get或者post请求
+        CSRF与XSS区别: CSRF不需要js代码，只需要发送一个get或者post请求
     </div>
 
     <div class="else">
@@ -1125,7 +1261,7 @@
         渐进增强: 一开始只构建站点的最少特性，然后不断针对各浏览器追加功能。
 
         a. 优雅降级是从复杂的现状开始，并试图减少用户体验的供给;
-        b. 渐进增强则是从一个非常基础的，能够起作用的版本开始，并不断扩充，以适应未来环境的需要;
+        b. 渐进增强是从一个非常基础的，能够起作用的版本开始，不断扩充，适应未来环境的需要;
         c. 降级意味着往回看；而渐进增强则意味着朝前看，同时保证其根基处于安全地带;
 
         websocket: WebSocket是与与http协议一样都基于TCP协议的
